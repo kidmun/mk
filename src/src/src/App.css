@@ -1,0 +1,10 @@
+.centered-app {
+    text-align: center;
+    padding: 20px;
+}
+.centered-app h1 {
+  color: red;
+}
+.centered-app button{
+   background: #5e57a5;
+}
