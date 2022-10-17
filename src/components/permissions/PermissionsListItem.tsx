@@ -13,17 +13,16 @@ interface PermissionListItemProps {
 }
 
 const PermissionListItem: React.FC<PermissionListItemProps> = props => {
-    return <li>
-         <article className="project">
+    return <article className="project">
     <header className="project__header">
       <h3 className="project__meta">
-    {props.permission.permissionName}:{props.permission.permissionName}
+    {props.permission.permissionName}
       </h3>
   
     </header>
    
   </article>
-    </li>
+   
 };
 
 export default PermissionListItem;

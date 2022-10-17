@@ -53,7 +53,7 @@ const Login: React.FC = () =>{
             dispatch(statusActions.setNotification({status: "success", title:"login", message:"you are successfully logged in"}))
             navigate("/");        
         }).catch(err => {
-            console.log(err)
+      dispatch(statusActions.setNotification({status:"error", title:"Fetch Error", message: "Error Occured, Check Yoor Credentials"}));
         })
     };
 
@@ -69,7 +69,7 @@ const Login: React.FC = () =>{
         <label htmlFor="username">Password</label>
         <input type="password"  id="password" ref={passwordInputRef}/>
          </div>
-        <button type="submit">Login</button>
+        <button type="submit" className="button">Login</button>
     </form>
     </Card>
 };

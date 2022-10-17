@@ -1,4 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
+
+import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { userActions } from "../../store/userSlice";
@@ -6,6 +9,7 @@ import { statusActions } from "../../store/statusSlice";
 import Card from "../UI/Card";
 
 const UpdateUser: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.status.token);
   const userNameInputRef = useRef<HTMLInputElement>(null);
@@ -14,6 +18,11 @@ const UpdateUser: React.FC = () => {
   const phoneNumebrInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
+  
+  const { userId } = useParams();
+  console.log(userId)
+  
+
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     console.log(userNameInputRef.current!.value);
@@ -21,7 +30,39 @@ const UpdateUser: React.FC = () => {
     console.log(emailInputRef.current!.value);
     console.log(phoneNumebrInputRef.current!.value);
     console.log(passwordInputRef.current!.value);
+
+      fetch("http://localhost:3001/api/system/user?system_id=c0662424-ad91-439d-a260-ec22e39a51a9&access_token="+token, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userInfo: {
+            id: userId,
+            userName: userNameInputRef.current!.value,
+            fullName: fullNameInputRef.current!.value,
+            email: emailInputRef.current!.value,
+            phoneNo: phoneNumebrInputRef.current!.value
+          }
+        }
+        ) 
   
+      }).then(response => {
+          if (!response.ok) {
+              throw new Error("Could not fetch user data!");
+            }
+      
+          return response.json();
+      })
+      .then(result => {
+          console.log(result)
+          dispatch(statusActions.setUsersChanged())
+          navigate('/');
+      }).catch(err => {
+          console.log(err)
+      })
+  
+
   };
   return (
     <Card>

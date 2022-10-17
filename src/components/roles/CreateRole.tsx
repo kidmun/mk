@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { statusActions } from "../../store/statusSlice";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../UI/Card";
 import './CreateRole.css';
@@ -8,6 +9,7 @@ import { RootState } from "../../store";
 
 const CreateRole: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state: RootState) => state.status.token)
   const roleNameInputRef = useRef<HTMLInputElement>(null);
  
@@ -34,7 +36,7 @@ const CreateRole: React.FC = () => {
         },
         body: JSON.stringify({
           key: Math.random().toString(),
-          roleName: "Role checker Name",
+          roleName: roleNameInputRef.current!.value,
           Permissions: []
         }),
       }
@@ -48,6 +50,7 @@ const CreateRole: React.FC = () => {
       })
       .then((result) => {
         console.log(result);
+        navigate('/roles');
       })
       .catch((err) => {
         console.log(err);
@@ -60,7 +63,7 @@ const CreateRole: React.FC = () => {
       <label htmlFor="roleName">Role Name</label>
       <input type="text" id="roleName" ref={roleNameInputRef} />
       </div>
-      <button type="submit">Create</button>
+      <button type="submit" className="button">Create</button>
     </form>
     </Card>
   );

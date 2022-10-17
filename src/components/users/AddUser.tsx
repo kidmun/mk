@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
 import { userActions } from "../../store/userSlice";
 import { statusActions } from "../../store/statusSlice";
@@ -7,6 +8,7 @@ import Card from "../UI/Card";
 
 const AddUser: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state: RootState) => state.status.token);
   const userNameInputRef = useRef<HTMLInputElement>(null);
   const fullNameInputRef = useRef<HTMLInputElement>(null);
@@ -16,11 +18,7 @@ const AddUser: React.FC = () => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(userNameInputRef.current!.value);
-    console.log(fullNameInputRef.current!.value);
-    console.log(emailInputRef.current!.value);
-    console.log(phoneNumebrInputRef.current!.value);
-    console.log(passwordInputRef.current!.value);
+  
     if (userNameInputRef.current!.value.trim().length === 0){
       dispatch(statusActions.setNotification({
         status: "error",
@@ -64,7 +62,7 @@ const AddUser: React.FC = () => {
     dispatch(statusActions.setNotification({status: "", title: "", message: ""}))
     const userData = {
       userInfo: {
-        id: "56489571-8f9d-4507-9589-75aa94e80839",
+        id: "56489571-8f9d-4507-9589-75aa94e80866",
         userName: userNameInputRef.current!.value,
         fullName: fullNameInputRef.current!.value,
         email: emailInputRef.current!.value,
@@ -92,6 +90,8 @@ const AddUser: React.FC = () => {
       })
       .then((result) => {
         console.log(result);
+        navigate('/');
+        dispatch(statusActions.setUsersChanged())
       })
       .catch((err) => {
         console.log(err);
@@ -120,7 +120,7 @@ const AddUser: React.FC = () => {
           <label htmlFor="password">Password</label>
           <input type="password" id="password" ref={passwordInputRef} />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="button">Add</button>
       </form>
     </Card>
   );

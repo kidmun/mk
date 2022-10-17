@@ -3,18 +3,19 @@
     border: 1px solid #24a392;
     border-radius: 5px;
     padding: 0.5rem;
+    background-color: rgb(243, 172, 20);
   }
   
   .project__meta {
     font-size: 1rem;
-    color: #707070;
+    color: white;
     margin: 0;
   }
   
   .project__title {
     font-size: 1.5rem;
     margin: 1rem 0;
-    color: #24a392;;
+    color: white;;
   }
   
   .project__image {
@@ -25,6 +26,19 @@
   .project__actions {
     text-align: right;
   }
+  .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
   
   @media (min-width: 768px) {
     .project {

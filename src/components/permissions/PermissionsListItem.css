@@ -26,6 +26,7 @@
     text-align: right;
   }
   
+  
   @media (min-width: 768px) {
     .project {
       padding: 1rem;

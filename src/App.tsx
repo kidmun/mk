@@ -21,6 +21,7 @@ import { statusActions } from "./store/statusSlice";
 import { fetchRoles } from './store/roleActions';
 import { fetchPermissions } from './store/permissionActions';
 import   UpdateUser  from './components/users/UpdateUser';
+import AssignRole from './components/roles/AssignRole'
 
 let Initial = true;
 interface User {
@@ -71,25 +72,12 @@ function App() {
         <Route path="/roles" element={<RolesList />} />
         <Route path="/create-role" element={<CreateRole />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/update-user" element={<UpdateUser />} />
+        <Route path="/update-user/:userId" element={<UpdateUser />} />
+        <Route path="/assign-role/:userId" element={<AssignRole />} />
         <Route
-          path="/role-detail"
+          path="/roles/:roleId"
           element={
-            <RoleDetail
-              role={{
-                id: "id1",
-                key: "id1",
-                roleName: "role name!",
-                permissions: [
-                  {
-                    id: "id",
-                    transId: "id",
-                    permissionName: "permName",
-                    permissionKey: "permName",
-                  },
-                ],
-              }}
-            />
+            <RoleDetail/>
           }
         />
         <Route
