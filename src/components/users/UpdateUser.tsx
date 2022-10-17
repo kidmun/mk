@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
+
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +8,7 @@ import { RootState } from "../../store";
 import { userActions } from "../../store/userSlice";
 import { statusActions } from "../../store/statusSlice";
 import Card from "../UI/Card";
+import './Project.css'
 
 const UpdateUser: React.FC = () => {
   const navigate = useNavigate();
@@ -87,7 +89,7 @@ const UpdateUser: React.FC = () => {
           <label htmlFor="password">Password</label>
           <input type="password" id="password" ref={passwordInputRef} />
         </div>
-        <button type="submit">Update</button>
+        <button type="submit" className="button">Update</button>
       </form>
     </Card>
   );

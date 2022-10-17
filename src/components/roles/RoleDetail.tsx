@@ -24,6 +24,8 @@ interface Role {
 const RoleDetail: React.FC = () => {
     const [role, setRole] = useState<Role>();
     const token = useSelector((state: RootState) => state.status.token);
+    const permissions = useSelector((state: RootState) => state.permissions.permissions);
+    let rolePermissions = [];
     const { roleId } = useParams();
     console.log(roleId)
     useEffect(() => {
@@ -43,9 +45,23 @@ const RoleDetail: React.FC = () => {
         })
     
     },[])
+    if (role?.permissions){
+        for (const permId of role!.permissions){
+            
+           let permission: any = permissions.find(item => item.id === permId.id);
+           if (permission){     
+            console.log(permission)   
+            rolePermissions.push(permission.permissionName);
+           }
+    
+        }
+        
+    }
     return <Card>
         <h1>{role?.roleName}</h1>
         <p>{role?.roleName}</p>
+        {rolePermissions.length > 0 ? <h2>Permissions</h2>: <h2>No Permissions</h2>}
+        {rolePermissions.length > 0 && rolePermissions.map(item => (<h2>{item}</h2>))}
     </Card>
 
 }

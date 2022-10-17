@@ -44,17 +44,23 @@ function App() {
   const users = useSelector((state: RootState) => state.users.users);
   const token = useSelector((state: RootState) => state.status.token); 
   const changed = useSelector((state: RootState) => state.status.usersChanged)
+  const roleChanged = useSelector((state: RootState) => state.status.rolesChanged)
   console.log(users, token)
   useEffect(() => {
     if (changed){
       dispatch(fetchUsers(token));
-
-      dispatch(fetchRoles(token))
       dispatch(fetchPermissions(token))
-      dispatch(statusActions.setOffUsersChanged())
     }
+    if (roleChanged){
+      dispatch(fetchRoles(token))
+    }
+      
     
-  }, [changed]);
+      dispatch(statusActions.setOffUsersChanged())
+      dispatch(statusActions.setOffRolesChanged())
+    
+    
+  }, [changed, roleChanged]);
 
 
 

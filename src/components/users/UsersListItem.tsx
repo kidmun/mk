@@ -53,7 +53,7 @@ return <article className="project">
     
     <div className="project__actions">
     <button type="button" className="button" onClick={userUpdateHandler}>Update</button>
-    <button type="button" className="button" onClick={userDetailHandler}>Detail</button>
+    <button type="button" className="button1" onClick={userDetailHandler}>Detail</button>
    
     </div>
   </article>

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
@@ -8,6 +8,10 @@ import Card from "../UI/Card";
 
 const AddUser: React.FC = () => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(statusActions.setNotification({status: '', title: "", message: ""}))
+
+}, [])
   const navigate = useNavigate();
   const token = useSelector((state: RootState) => state.status.token);
   const userNameInputRef = useRef<HTMLInputElement>(null);
@@ -62,7 +66,7 @@ const AddUser: React.FC = () => {
     dispatch(statusActions.setNotification({status: "", title: "", message: ""}))
     const userData = {
       userInfo: {
-        id: "56489571-8f9d-4507-9589-75aa94e80866",
+        id: "56489571-8f9d-4507-9589-75aa94e8"+ Math.random().toString().slice(3,7),
         userName: userNameInputRef.current!.value,
         fullName: fullNameInputRef.current!.value,
         email: emailInputRef.current!.value,

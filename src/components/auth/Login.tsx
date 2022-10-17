@@ -48,12 +48,17 @@ const Login: React.FC = () =>{
         })
         .then(result => {
             console.log(result)
+           if (result.error===null){
+            dispatch(statusActions.setNotification({status:"error", title:"Wrong Username or Password", message: "Error Occured, Check your credentials"}));
+          return; 
+          }
             dispatch(statusActions.setToken(result))
             dispatch(statusActions.setUsersChanged())
+            dispatch(statusActions.setRolesChanged())
             dispatch(statusActions.setNotification({status: "success", title:"login", message:"you are successfully logged in"}))
             navigate("/");        
         }).catch(err => {
-      dispatch(statusActions.setNotification({status:"error", title:"Fetch Error", message: "Error Occured, Check Yoor Credentials"}));
+      dispatch(statusActions.setNotification({status:"error", title:"Fetch Error", message: "Error Occured, Check your credentials"}));
         })
     };
 

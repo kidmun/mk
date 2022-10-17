@@ -10,6 +10,7 @@ interface StatusState {
     notification: Notification,
     token: string,
     usersChanged: boolean,
+    rolesChanged: boolean
     roles: string[],
     assigning: boolean
 
@@ -23,6 +24,7 @@ const initialState: StatusState = {
     },
     token: "",
     usersChanged: false,
+    rolesChanged: false,
     roles: [],
     assigning: false
 }
@@ -42,6 +44,12 @@ const statusSlice = createSlice({
         },
         setOffUsersChanged(state){
             state.usersChanged = false;
+        },
+        setRolesChanged(state){
+            state.rolesChanged = true;
+        },
+        setOffRolesChanged(state){
+            state.rolesChanged = false;
         },
         addRole(state, action: PayloadAction<string>){
             state.roles.push(action.payload)

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { statusActions } from "../../store/statusSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,10 @@ const CreateRole: React.FC = () => {
   const token = useSelector((state: RootState) => state.status.token)
   const roleNameInputRef = useRef<HTMLInputElement>(null);
  
+  useEffect(() => {
+    dispatch(statusActions.setNotification({status: '', title: "", message: ""}))
 
+}, [])
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     console.log(roleNameInputRef.current!.value);
@@ -50,6 +53,7 @@ const CreateRole: React.FC = () => {
       })
       .then((result) => {
         console.log(result);
+        dispatch(statusActions.setRolesChanged());
         navigate('/roles');
       })
       .catch((err) => {
