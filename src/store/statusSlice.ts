@@ -6,13 +6,26 @@ interface Notification {
     message: string
 }
 
+interface User {
+    id: string,
+    time: 0,
+    transId: string,
+    userName: string,
+    fullName: string,
+    email: string,
+    phoneNo: string,
+    roles: string[],
+    enabled: true 
+}
+
 interface StatusState {
     notification: Notification,
     token: string,
     usersChanged: boolean,
     rolesChanged: boolean
     roles: string[],
-    assigning: boolean
+    assigning: boolean,
+    currentUser: User[]
 
 }
 
@@ -26,7 +39,8 @@ const initialState: StatusState = {
     usersChanged: false,
     rolesChanged: false,
     roles: [],
-    assigning: false
+    assigning: false,
+    currentUser: []
 }
 
 const statusSlice = createSlice({
@@ -59,7 +73,17 @@ const statusSlice = createSlice({
         },
         turnOffAssigning(state) {
             state.assigning = false;
+        },
+        defaultRole(state) {
+            state.roles = []
+        },
+        setCurrentUser (state, action: PayloadAction<User>){
+            state.currentUser.push(action.payload);
+        },
+        defaultCurrentUser(state){
+            state.currentUser = []
         }
+
 
 
     }

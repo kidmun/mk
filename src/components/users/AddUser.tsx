@@ -2,16 +2,16 @@ import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
-import { userActions } from "../../store/userSlice";
 import { statusActions } from "../../store/statusSlice";
 import Card from "../UI/Card";
 
 const AddUser: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(statusActions.setNotification({status: '', title: "", message: ""}))
-
-}, [])
+    dispatch(
+      statusActions.setNotification({ status: "", title: "", message: "" })
+    );
+  }, []);
   const navigate = useNavigate();
   const token = useSelector((state: RootState) => state.status.token);
   const userNameInputRef = useRef<HTMLInputElement>(null);
@@ -22,51 +22,65 @@ const AddUser: React.FC = () => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-  
-    if (userNameInputRef.current!.value.trim().length === 0){
-      dispatch(statusActions.setNotification({
-        status: "error",
-        title: "Form Error",
-        message: "please enter username"
-      }))
+
+    if (userNameInputRef.current!.value.trim().length === 0) {
+      dispatch(
+        statusActions.setNotification({
+          status: "error",
+          title: "Form Error",
+          message: "please enter username",
+        })
+      );
       return;
     }
-    if (fullNameInputRef.current!.value.trim().length === 0){
-      dispatch(statusActions.setNotification({
-        status: "error",
-        title: "Form Error",
-        message: "Please Enter Full Name"
-      }))
+    if (fullNameInputRef.current!.value.trim().length === 0) {
+      dispatch(
+        statusActions.setNotification({
+          status: "error",
+          title: "Form Error",
+          message: "Please Enter Full Name",
+        })
+      );
       return;
     }
-    if (emailInputRef.current!.value.trim().length === 0){
-      dispatch(statusActions.setNotification({
-        status: "error",
-        title: "Form Error",
-        message: "Please Enter Email"
-      }))
+    if (emailInputRef.current!.value.trim().length === 0) {
+      dispatch(
+        statusActions.setNotification({
+          status: "error",
+          title: "Form Error",
+          message: "Please Enter Email",
+        })
+      );
       return;
     }
-    if (phoneNumebrInputRef.current!.value.trim().length === 0){
-      dispatch(statusActions.setNotification({
-        status: "error",
-        title: "Form Error",
-        message: "Please Enter Phone Number"
-      }))
+    if (phoneNumebrInputRef.current!.value.trim().length === 0) {
+      dispatch(
+        statusActions.setNotification({
+          status: "error",
+          title: "Form Error",
+          message: "Please Enter Phone Number",
+        })
+      );
       return;
     }
-    if (passwordInputRef.current!.value.trim().length < 4){
-      dispatch(statusActions.setNotification({
-        status: "error",
-        title: "Form Error",
-        message: "Please Enter Password More Than Three Characters "
-      }))
+    if (passwordInputRef.current!.value.trim().length < 4) {
+      dispatch(
+        statusActions.setNotification({
+          status: "error",
+          title: "Form Error",
+          message: "Please Enter Password More Than Three Characters ",
+        })
+      );
       return;
     }
-    dispatch(statusActions.setNotification({status: "", title: "", message: ""}))
+    dispatch(
+      statusActions.setNotification({ status: "", title: "", message: "" })
+    );
     const userData = {
       userInfo: {
-        id: "56489571-8f9d-4507-9589-75aa94e8"+ Math.random().toString().slice(3,7),
+        id:
+          "56489571-8f9d-4507-9589-75aa94e8" +
+          Math.random().toString().slice(3, 7),
         userName: userNameInputRef.current!.value,
         fullName: fullNameInputRef.current!.value,
         email: emailInputRef.current!.value,
@@ -75,7 +89,7 @@ const AddUser: React.FC = () => {
       password: passwordInputRef.current!.value,
     };
     fetch(
-      'http://localhost:3001/api/system/user?system_id=c0662424-ad91-439d-a260-ec22e39a51a9&access_token='+
+      "http://localhost:3001/api/system/user?system_id=c0662424-ad91-439d-a260-ec22e39a51a9&access_token=" +
         token,
       {
         method: "POST",
@@ -94,8 +108,8 @@ const AddUser: React.FC = () => {
       })
       .then((result) => {
         console.log(result);
-        navigate('/');
-        dispatch(statusActions.setUsersChanged())
+        navigate("/");
+        dispatch(statusActions.setUsersChanged());
       })
       .catch((err) => {
         console.log(err);
@@ -124,7 +138,9 @@ const AddUser: React.FC = () => {
           <label htmlFor="password">Password</label>
           <input type="password" id="password" ref={passwordInputRef} />
         </div>
-        <button type="submit" className="button">Add</button>
+        <button type="submit" className="button">
+          Add
+        </button>
       </form>
     </Card>
   );

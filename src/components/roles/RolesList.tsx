@@ -14,7 +14,7 @@ const RolesList: React.FC = () => {
     
     }, [])
     const roles = useSelector((state: RootState) => (state.roles.roles));
-    console.log(roles)
+   
     return <React.Fragment>
     <ul>
         {roles.map(item => (<RolesListItem key={item.id} role={item}/>))}

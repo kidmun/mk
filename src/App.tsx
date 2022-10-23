@@ -1,10 +1,7 @@
-import React,{ useEffect } from "react";
+import React, { useEffect } from "react";
 import { RootState } from "./store/index";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "./store/userSlice";
 import "./App.css";
-import { roleActions } from "./store/roleSlice";
-import { permissionAction } from "./store/permissionSlice";
 import UsersList from "./components/users/UsersList";
 import RolesList from "./components/roles/RolesList";
 import PermissionsList from "./components/permissions/PermissionsList";
@@ -18,60 +15,46 @@ import Navigation from "./components/navigation/Navigations";
 import { Routes, Route } from "react-router-dom";
 import { fetchUsers } from "./store/userActions";
 import { statusActions } from "./store/statusSlice";
-import { fetchRoles } from './store/roleActions';
-import { fetchPermissions } from './store/permissionActions';
-import   UpdateUser  from './components/users/UpdateUser';
-import AssignRole from './components/roles/AssignRole'
-
-let Initial = true;
-interface User {
-  id: string;
-  time: 0;
-  transId: string;
-  userName: string;
-  fullName: string;
-  email: string;
-  phoneNo: string;
-  roles: string[];
-  enabled: true;
-}
+import { fetchRoles } from "./store/roleActions";
+import { fetchPermissions } from "./store/permissionActions";
+import UpdateUser from "./components/users/UpdateUser";
+import AssignRole from "./components/roles/AssignRole";
 
 function App() {
   const dispatch = useDispatch();
   const notification = useSelector(
     (state: RootState) => state.status.notification
   );
-  const users = useSelector((state: RootState) => state.users.users);
-  const token = useSelector((state: RootState) => state.status.token); 
-  const changed = useSelector((state: RootState) => state.status.usersChanged)
-  const roleChanged = useSelector((state: RootState) => state.status.rolesChanged)
-  console.log(users, token)
+
+  const token = useSelector((state: RootState) => state.status.token);
+  const changed = useSelector((state: RootState) => state.status.usersChanged);
+  const roleChanged = useSelector(
+    (state: RootState) => state.status.rolesChanged
+  );
+
   useEffect(() => {
-    if (changed){
+    if (changed) {
       dispatch(fetchUsers(token));
-      dispatch(fetchPermissions(token))
+      dispatch(fetchPermissions(token));
     }
-    if (roleChanged){
-      dispatch(fetchRoles(token))
+    if (roleChanged) {
+      dispatch(fetchRoles(token));
     }
-      
-    
-      dispatch(statusActions.setOffUsersChanged())
-      dispatch(statusActions.setOffRolesChanged())
-    
-    
+
+    dispatch(statusActions.setOffUsersChanged());
+    dispatch(statusActions.setOffRolesChanged());
   }, [changed, roleChanged]);
-
-
 
   return (
     <React.Fragment>
       <Navigation />
-      {notification.status.length !== 0 && <Notification
+      {notification.status.length !== 0 && (
+        <Notification
           status={notification.status}
           title={notification.title}
           message={notification.message}
-        />}
+        />
+      )}
       <Routes>
         <Route path="/" element={<UsersList />} />
         <Route path="/add-user" element={<AddUser />} />
@@ -80,21 +63,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/update-user/:userId" element={<UpdateUser />} />
         <Route path="/assign-role/:userId" element={<AssignRole />} />
-        <Route
-          path="/roles/:roleId"
-          element={
-            <RoleDetail/>
-          }
-        />
-        <Route
-          path="/users/:userId"
-          element={
-            <UserDetail/>
-          }
-        />
+        <Route path="/roles/:roleId" element={<RoleDetail />} />
+        <Route path="/users/:userId" element={<UserDetail />} />
         <Route path="/permissions" element={<PermissionsList />} />
       </Routes>
-     
     </React.Fragment>
   );
 }
